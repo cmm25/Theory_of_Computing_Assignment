@@ -1,0 +1,43 @@
+import pygame
+
+pygame.font.init()
+
+#screen dimensions
+width = 1000
+SCREEN_HEIGHT = 800
+fps = 60
+
+#colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (100, 100, 100)
+LIGHT_GRAY = (200, 200, 200)
+DARK_GRAY = (50, 50, 50)
+BLUE = (41, 128, 185)
+LIGHT_BLUE = (52, 152, 219)
+RED = (231, 76, 60)
+LIGHT_RED = (242, 120, 75)
+GREEN = (46, 204, 113)
+LIGHT_GREEN = (88, 233, 134)
+YELLOW = (241, 196, 15)
+ORANGE = (230, 126, 34)
+PURPLE = (142, 68, 173)
+COLA_COLOR = (183, 28, 28)
+FANTA_COLOR = (245, 124, 0)
+SPRITE_COLOR = (104, 159, 56)
+WATER_COLOR = (3, 169, 244)
+
+# UI SETTINGS
+MACHINE_COLOR = (52, 73, 94)
+MACHINE_BORDER = (44, 62, 80)
+DISPLAY_COLOR = (22, 160, 133)
+DISPLAY_TEXT_COLOR = (236, 240, 241)
+DISPLAY_BORDER = (20, 143, 119)
+MONEY_SLOT_COLOR = (108, 122, 137)
+COIN_RETURN_COLOR = (189, 195, 199)
+
+#FONTS
+FONT_REGULAR = pygame.font.Font(None, 24)
+FONT_BOLD = pygame.font.Font(None, 28)
+FONT_LARGE = pygame.font.Font(None, 36)
+FONT_DISPLAY = pygame.font.Font(None, 32)
