@@ -1,10 +1,7 @@
 import pygame
 import random
 import math
-from project.constants import (YELLOW,ORANGE,
-                                LIGHT_GRAY,BLACK,
-                                DARK_GRAY,FONT_BOLD,
-                                WHITE)
+from constants import *
 class Coin:
     def __init__(self, x, y, value, size=70):
         self.rect = pygame.Rect(x, y, size, size)
@@ -24,7 +21,7 @@ class Coin:
             color = LIGHT_GRAY
             border_color = (150, 150, 150)
             shine_color = (220, 220, 220, 150)
-        else:  
+        else:
             color = ORANGE
             border_color = (202, 111, 30)
             shine_color = (246, 185, 128, 150)
@@ -36,8 +33,9 @@ class Coin:
                            self.rect.width // 2 - 2)
 
         # Inner ring
-        pygame.draw.circle(screen, border_color,
-                           self.rect.center, self.rect.width // 2 - 8, 2)
+        pygame.draw.circle(
+            screen, border_color, self.rect.center, self.rect.width // 2 - 8, 2
+        )
 
         # Dynamic shine effect
         self.shine_angle += self.shine_speed
@@ -45,14 +43,22 @@ class Coin:
             self.rect.centerx +
             math.cos(self.shine_angle) * (self.rect.width // 4),
             self.rect.centery +
-            math.sin(self.shine_angle) * (self.rect.width // 4)
+            math.sin(self.shine_angle) * (self.rect.width // 4),
         )
         shine_surf = pygame.Surface(
-            (self.rect.width // 3, self.rect.width // 3), pygame.SRCALPHA)
-        pygame.draw.circle(shine_surf, shine_color, (self.rect.width //
-                           6, self.rect.width // 6), self.rect.width // 6)
+            (self.rect.width // 3, self.rect.width // 3), pygame.SRCALPHA
+        )
+        pygame.draw.circle(
+            shine_surf,
+            shine_color,
+            (self.rect.width // 6, self.rect.width // 6),
+            self.rect.width // 6,
+        )
         screen.blit(
-            shine_surf, (shine_pos[0] - self.rect.width // 6, shine_pos[1] - self.rect.width // 6))
+            shine_surf,
+            (shine_pos[0] - self.rect.width // 6,
+             shine_pos[1] - self.rect.width // 6),
+        )
 
         text_surf = FONT_BOLD.render(f"{self.value}", True, BLACK)
         text_rect = text_surf.get_rect(center=self.rect.center)
@@ -64,8 +70,10 @@ class Coin:
 
     def is_clicked(self, pos):
         # Check if the point is inside the circle
-        distance = ((pos[0] - self.rect.centerx) ** 2 +
-                    (pos[1] - self.rect.centery) ** 2) ** 0.5
+        distance = (
+            (pos[0] - self.rect.centerx) ** 2 +
+            (pos[1] - self.rect.centery) ** 2
+        ) ** 0.5
         return distance <= self.rect.width // 2
 
     def update_pos(self, pos):
@@ -80,6 +88,8 @@ class Coin:
 
 class Note:
     def __init__(self, x, y, value, width=120, height=60):
+        # Ensure height is never zero
+        height = max(1, height)
         self.rect = pygame.Rect(x, y, width, height)
         self.value = value
         self.dragging = False
@@ -91,46 +101,63 @@ class Note:
     def draw(self, screen):
         "COLOR ARE IN SHADES SO SHADES OF GREEN THEN BLUE THEN RED ETC.."
         if self.value == 50:
-            base_color = (200, 255, 200)  
-            accent_color = (46, 204, 113) 
+            base_color = (200, 255, 200)
+            accent_color = (46, 204, 113)
         elif self.value == 100:
-            base_color = (173, 216, 230)  
-            accent_color = (41, 128, 185)  
+            base_color = (173, 216, 230)
+            accent_color = (41, 128, 185)
         elif self.value == 200:
-            base_color = (255, 200, 200)  
-            accent_color = (231, 76, 60)  
+            base_color = (255, 200, 200)
+            accent_color = (231, 76, 60)
         elif self.value == 500:
-            base_color = (230, 190, 230)  
-            accent_color = (142, 68, 173)  
-        else:  
-            base_color = (255, 255, 200)  
-            accent_color = (243, 156, 18)  
+            base_color = (230, 190, 230)
+            accent_color = (142, 68, 173)
+        else:
+            base_color = (255, 255, 200)
+            accent_color = (243, 156, 18)
 
-        pygame.draw.rect(screen, accent_color,
-                            (self.rect.x, self.rect.y,
-                            self.rect.width, self.rect.height),
-                            border_radius=5)
+        pygame.draw.rect(
+            screen,
+            accent_color,
+            (self.rect.x, self.rect.y, self.rect.width, self.rect.height),
+            border_radius=5,
+        )
 
-        inner_rect = pygame.Rect(self.rect.x + 2, self.rect.y + 2,
-                                    self.rect.width - 4, self.rect.height - 4)
+        inner_rect = pygame.Rect(
+            self.rect.x + 2, self.rect.y + 2, self.rect.width - 4, self.rect.height - 4
+        )
         pygame.draw.rect(screen, base_color, inner_rect, border_radius=5)
 
-        pygame.draw.rect(screen, accent_color,
-                            (self.rect.x + 10, self.rect.y + 10,
-                            self.rect.width - 20, self.rect.height - 20),
-                            1, border_radius=3)
+        pygame.draw.rect(
+            screen,
+            accent_color,
+            (
+                self.rect.x + 10,
+                self.rect.y + 10,
+                self.rect.width - 20,
+                self.rect.height - 20,
+            ),
+            1,
+            border_radius=3,
+        )
 
         text_surf = FONT_BOLD.render(f"{self.value} Shs", True, DARK_GRAY)
         text_rect = text_surf.get_rect(center=self.rect.center)
         screen.blit(text_surf, text_rect)
 
-        shine_y = (pygame.time.get_ticks() // 20 +
-                   self.shine_offset) % (self.rect.height * 2) - self.rect.height
+        # safety check
+        if self.rect.height > 0:
+            shine_y = (pygame.time.get_ticks() // 20 + self.shine_offset) % (
+                self.rect.height * 2
+            ) - self.rect.height
+        else:
+            shine_y = 0  # Fallback if height is zero
+
         shine_surf = pygame.Surface((self.rect.width, 10), pygame.SRCALPHA)
         for i in range(10):
             alpha = 255 - i * 25
-            pygame.draw.line(shine_surf, (255, 255, 255, alpha),
-                                (0, i), (self.rect.width, i), 1)
+            pygame.draw.line(
+                shine_surf, (255, 255, 255, alpha), (0,i), (self.rect.width, i), 1)
         screen.blit(shine_surf, (self.rect.x, self.rect.y + shine_y))
 
         if self.dragging:

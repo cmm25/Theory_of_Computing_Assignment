@@ -4,7 +4,7 @@ pygame.font.init()
 
 #screen dimensions
 SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 800
+SCREEN_HEIGHT = 780
 fps = 60
 
 #colors

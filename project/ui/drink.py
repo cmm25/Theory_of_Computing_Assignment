@@ -1,8 +1,6 @@
 import pygame 
 import random
-from project.constants import DARK_GRAY, BLACK, FONT_BOLD, WHITE, SCREEN_HEIGHT
-
-
+from constants import *
 class Drink:
     def __init__(self, x, y, name, color, size=80):
             self.rect = pygame.Rect(x, y, size, size * 1.5)
@@ -26,9 +24,7 @@ class Drink:
             rotated = pygame.transform.rotate(rotated_surface, self.rotation)
             screen.blit(rotated, (self.rect.x - (rotated.get_width() - self.rect.width) // 2,
                                   self.rect.y - (rotated.get_height() - self.rect.height) // 2))
-        else:
-            # If not falling, draw normally
-            self.draw_can(screen)
+        
 
     def draw_can(self, surface):
         # Can body
