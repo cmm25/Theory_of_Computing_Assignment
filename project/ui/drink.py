@@ -60,7 +60,6 @@ class Drink:
 
     def update(self):
         if self.is_dispensed and not self.is_falling:
-            # Start fall animation after a short delay
             self.is_falling = True
             self.fall_speed = 2
             self.rotation_speed = random.uniform(-3, 3)
@@ -69,8 +68,6 @@ class Drink:
             # Update position
             self.fall_speed += 0.2
             self.rect.y += self.fall_speed
-
-            # Update rotation
             self.rotation += self.rotation_speed
 
             # Reset if the drink falls off the screen
