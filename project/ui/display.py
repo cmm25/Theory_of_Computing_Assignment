@@ -19,12 +19,10 @@ class MoneySlot:
         slot_color = LIGHT_BLUE if self.active else MONEY_SLOT_COLOR
         pygame.draw.rect(screen, slot_color, self.rect, border_radius=5)
 
-        # Darker inset to create depth
         inset_rect = pygame.Rect(self.rect.x + 5, self.rect.y + 5,
                                  self.rect.width - 10, self.rect.height - 10)
         pygame.draw.rect(screen, DARK_GRAY, inset_rect, border_radius=3)
 
-        # Text
         text_surf = FONT_BOLD.render("INSERT MONEY", True, WHITE)
         text_rect = text_surf.get_rect(center=self.rect.center)
         screen.blit(text_surf, text_rect)
@@ -69,14 +67,14 @@ class ChangeDisplay:
         y_offset_notes = self.rect.y + 140
 
         for denom in denominations:
-            if denom <= 40:  # Coins
+            if denom <= 40: 
                 coin = Coin(x_offset, y_offset_coins, denom, 60)
                 self.coins.append(coin)
                 x_offset += 70
                 if x_offset > self.rect.right - 70:
                     x_offset = self.rect.x + 20
                     y_offset_coins += 70
-            else:  # Notes
+            else: 
                 note = Note(x_offset, y_offset_notes, denom, 100, 50)
                 self.notes.append(note)
                 x_offset += 110
@@ -101,9 +99,9 @@ class ChangeDisplay:
 
         # Animation for newly returned change
         time_diff = pygame.time.get_ticks() - self.animation_start
-        if time_diff < 1000:  # 1 second animation
+        if time_diff < 1000:  
             scale = min(1.0, time_diff / 1000)
-            scale = max(0.01, scale)  # Ensure scale is never zero
+            scale = max(0.01, scale) 
             for coin in self.coins:
                 coin_center = coin.rect.center
                 coin.rect.width = coin.rect.height = int(
